@@ -118,9 +118,13 @@ class ReconstructByAnglesSlice:
     supported_postprocessing = ["no", "circ_mask", "median_filter"]
     supported_libraries_and_methods = {
         "localtomo": ["fbp", ],
-        "noise2inverse": ["fbp", ],
-        # ToDo tomopy support
-        # "tomopy": ["fbp",]
+        "noise2inverse": ["fbp", ], # На самом деле это реализация tomosipo, noise2inverse же добавляет фильтрацию проекций
+        # ToDo test tomopy support
+        "tomopy": [
+            "fbp", "gridrec", "bart", "mlem", "osem", "art",
+            "astra_FBP", "astra_SIRT",
+            "ospml_hybrid", "ospml_quad",
+            "pml_hybrid", "pml_quad", "sirt", "tv", "grad", "tikh",]
     }
 
     def __init__(
@@ -203,11 +207,11 @@ class ReconstructByAnglesSlice:
                     angles=self.angles, rot_center=self.center
                 )
             elif self.library == "tomopy":
-                # ToDo - ?
+                # ToDo - подумать, какие параметры можно инициализировать для tomopy?
                 print("Tomopy support")
             else:
 
-                assert False, "#ToDo"
+                assert False, "# ToDo"
 
 
     def postprocess(self, recs):
@@ -239,7 +243,7 @@ class ReconstructByAnglesSlice:
             recs = tomopy_recon(sinos, self.angles, self.center, algorithm=self.method, sinogram_order=False)
 
         else:
-            assert False, "#ToDo"
+            assert False, "# ToDo"
 
         return self.postprocess(recs)
 
@@ -254,11 +258,18 @@ class ReconstructByAnglesSlice:
             print("\nsinos_split:", sinos_split.shape, )
 
             if self.library == "localtomo":
-                recs_split = self.astratb_obj.fbp(sinos_split)
+                if self.method == "fbp":
+                    recs_split = self.astratb_obj.fbp(sinos_split)
+                else:
+                    assert False  # ToDo
             elif self.library == "noise2inverse":
-                pg_split = self.pg[j::num_splits]
-                A_split = ts.operator(self.vg, pg_split)
-                recs_split = tomo.fbp(A_split, sinos_split)
+                if self.method == "fbp":
+                    pg_split = self.pg[j::num_splits]
+                    A_split = ts.operator(self.vg, pg_split)
+                    recs_split = tomo.fbp(A_split, sinos_split)
+                else:
+                    assert False  # ToDo
+
                 '''
                     filtered_sino_split = filter_proj_data(
                         torch.from_numpy(sinos_split)
@@ -271,7 +282,7 @@ class ReconstructByAnglesSlice:
                 '''
 
             else:
-                assert False, "#ToDo"
+                assert False # ToDo
 
             yield self.postprocess(recs_split)
 

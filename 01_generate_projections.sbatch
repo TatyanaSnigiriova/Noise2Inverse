@@ -14,6 +14,7 @@ python 01_generate_projections.py \
     --projs_path='sand_1p1x_31MP_034.h5' \
     --data_dir_name="data" --logs_dir_name="logs" \
     -prefix="output" --log_proj_idx=50;
+
 python 01_generate_projections.py \
     -cpu=0 -global_r_s=42 \
     --working_dir='phantom' \
