@@ -17,6 +17,7 @@ python 02_reconstruct.py \
     --center=300 --rec_width=-1 \
     -modes="circ_mask" -splits=4 \
     -norm=1 -hist=99 --circ_mask_ratio=0.9;
+
 python 02_reconstruct.py \
     -cpu=0 -global_rs=42 \
     --reconstruction_library='noise2inverse' --reconstruction_method='fbp' \

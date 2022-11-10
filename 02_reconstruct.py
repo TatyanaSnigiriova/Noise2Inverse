@@ -89,11 +89,38 @@ class FBPSinosPreprocessor:
         return self.transform(sinos)
 
 
+def tomopy_recon(sino_noisy, angles, rot_center, algorithm="gridrec", sinogram_order=False):
+    # assert algorithm in alghoritms
+    if algorithm == "gridrec":
+        rec = tomopy.recon(
+            sino_noisy, angles, center=rot_center,
+            algorithm='gridrec', sinogram_order = sinogram_order,
+        )
+    elif algorithm == "astra_FBP":
+        #options = {'proj_type': 'cuda', 'method': 'FBP_CUDA'}
+        options = {'proj_type': 'linear', 'method': 'FBP'}
+
+        rec = tomopy.recon(
+            sino_noisy, angles, center=rot_center,
+            algorithm=tomopy.astra, sinogram_order = sinogram_order,  options=options
+        )
+    elif algorithm == "astra_SIRT":
+        #extra_options = {'MinConstraint': 0}
+        extra_options = {}
+        options = {'proj_type': 'cuda', 'method': 'SIRT_CUDA', 'num_iter': 50, 'extra_options': extra_options}
+        rec = tomopy.recon(sino_noisy, angles, center=rot_center, algorithm=tomopy.astra, options=options)
+    else:
+        rec = tomopy.recon(sino_noisy, angles, center=rot_center, algorithm=algorithm)
+    return rec
+
+
 class ReconstructByAnglesSlice:
     supported_postprocessing = ["no", "circ_mask", "median_filter"]
     supported_libraries_and_methods = {
         "localtomo": ["fbp", ],
-        "noise2inverse": ["fbp", ]
+        "noise2inverse": ["fbp", ],
+        # ToDo tomopy support
+        # "tomopy": ["fbp",]
     }
 
     def __init__(
@@ -162,7 +189,10 @@ class ReconstructByAnglesSlice:
 
             self.A = ts.operator(self.vg, self.pg)
         else:
-            self.center = self.width / 2  # ToDo Или найти через tomopy
+            if center == -1:
+                self.center = self.width / 2  # (можно еще найти через tomopy)
+            else:
+                self.center = center
 
             if self.library == "localtomo":
                 # ToDo - не работает, возможно, здесь требуется обрабатывать каждую отдельную синограму
@@ -172,7 +202,11 @@ class ReconstructByAnglesSlice:
                     dwidth=self.width,
                     angles=self.angles, rot_center=self.center
                 )
+            elif self.library == "tomopy":
+                # ToDo - ?
+                print("Tomopy support")
             else:
+
                 assert False, "#ToDo"
 
 
@@ -187,13 +221,22 @@ class ReconstructByAnglesSlice:
         return recs
 
     def gen_recs(self, sinos):
+        # ToDo - methods support
         if self.library == "localtomo":
-            recs = self.astratb_obj.fbp(sinos)
+            if self.method == "fbp":
+                recs = self.astratb_obj.fbp(sinos)
+            else:
+                assert False # ToDo
         elif self.library == "noise2inverse":
-            new_sinos = self.pr_obj.transform(sinos)
-            print("\nnew_sinos:", new_sinos.shape)
+            if self.method == "fbp":
+                new_sinos = self.pr_obj.transform(sinos)
+                print("\nnew_sinos:", new_sinos.shape)
 
-            recs = tomo.fbp(self.A, new_sinos)
+                recs = tomo.fbp(self.A, new_sinos)
+            else:
+                assert False # ToDo
+        elif self.library == "tomopy":
+            recs = tomopy_recon(sinos, self.angles, self.center, algorithm=self.method, sinogram_order=False)
 
         else:
             assert False, "#ToDo"
@@ -302,12 +345,12 @@ def main(
     # sinos_noisy = np.moveaxis(sinos_noisy, 1, 0)
     print("sino_noisy:", sinos_noisy.shape, type(sinos_noisy), sinos_noisy.dtype)
 
-    # ToDo А у кого торчат усы как у лисы?
     postprocessing_args = dict()
     if "circ_mask" in modes_correction_list:
         postprocessing_args["circ_mask"] = [('ratio', circ_mask_ratio), ('axis', 0), ]
     if "median_filter" in modes_correction_list:
         postprocessing_args["median"] = [('size', 3), ('axis', 0), ]
+
     print("postprocessing_args:", postprocessing_args)
     log_images = dict()
 
