@@ -57,7 +57,7 @@ def main(
     
     # Phantom parameters
     if sample_name == "phantom":
-        # ToDo - вынести в аогументы запуска
+        # ToDo - вынести в аогументы запуска?
         num_voxels = 512
         num_slices = 512
         num_angles = 1024
@@ -94,7 +94,7 @@ def main(
             nx=num_voxels * 3 // 2,  # 768
             ny=num_slices,  # 512
             angles=np.linspace(0, np.pi, num_angles, False),  # num_angles = 1024
-            pixsize=2 / num_voxels,  # ToDo pixsize = 0,00390625 ???
+            pixsize=2 / num_voxels,  # ToDo pixsize = 0,00390625 ?
             supersampling=supersampling,
         )
 
@@ -225,6 +225,7 @@ if __name__ == '__main__':
     else:
         device = 'gpu'
     # ToDo - настройка устройства под pytorch
+    # ToDo - запуск на GPU
     if len(
             list(filter(
                 lambda name: name == 'tensorflow',
@@ -250,6 +251,7 @@ if __name__ == '__main__':
     if not (os.path.isabs(projs_path) or projs_path.startswith('.')):
         # Пытаемся считать из директории, из которой был запущен код
         # ToDo - или getcwd() выдаст путь, по которому находится 01_generate_projections.py?
+        #  (Кейс, когда скрипт запуска вызывает файл.py из другой директории)
         if exists(working_dir):
             if getcwd() == working_dir:
                 assert exists(join(working_dir, projs_path)),\
