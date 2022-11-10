@@ -51,7 +51,7 @@ def main(
 
     # Scale pixel intensities during training such that its values roughly occupy the range [0,1].
     # This improves convergence.
-    data_scaling = 200
+    #data_scaling = 200
 
     datasets = [TiffDataset(join(main_sub_recs_data_path, f"{j}", "*.tif")) for j in range(num_splits)]
     train_ds = Noise2InverseDataset(*datasets, strategy=strategy)
@@ -129,6 +129,7 @@ def main(
             start_epoch = checkpoint['epoch'] + 1
             #loss = checkpoint['loss']
         else:
+            start_epoch = 0
             print("Задано дообучение модели, но предобученных весов по указаному пути не найдено")
 
 
@@ -138,11 +139,11 @@ def main(
     epoch = start_epoch
     print("current epoch:", epoch, "\tstart_epoch + train_epochs:", start_epoch + train_epochs)
     # training loop
-    for epoch in range(start_epoch, start_epoch + train_epochs):
+    for epoch in range(epoch, epoch + train_epochs):
         # Train
         for (inp, tgt) in tqdm(dl):
-            inp = inp * data_scaling
-            tgt = tgt * data_scaling
+            #inp = inp * data_scaling
+            #tgt = tgt * data_scaling
             # inp = inp.cuda(non_blocking=True) * data_scaling
             # tgt = tgt.cuda(non_blocking=True) * data_scaling
             inp = inp.to(device)
@@ -183,7 +184,7 @@ def main(
     # By default that is an msd modelwork
 
     # Scale pixel intensities in the same way as during training.
-    data_scaling = 200
+    #data_scaling = 200
 
     ds = Noise2InverseDataset(*datasets, strategy=strategy)
 
@@ -200,10 +201,10 @@ def main(
     with torch.no_grad():
         for i, batch in tqdm(enumerate(dl)):
             inp, _ = batch
-            inp = inp.to(device) * data_scaling
+            inp = inp.to(device) #* data_scaling
             out = model(inp)
             # Take mean over batch dimension (splits):
-            out = out.mean(dim=0) / data_scaling
+            out = out.mean(dim=0) #/ data_scaling
             # Obtain 2D numpy array
             out_np = out.detach().cpu().numpy().squeeze()
             out_path = join(denoised_recs_dir_path, f"{output_denoised_recs_prefix}_{i:05d}.tif")
