@@ -3,6 +3,7 @@ import os
 from os import listdir
 from os.path import join, exists, split, realpath
 from pathlib import Path
+from shutil import rmtree
 
 import torch
 from torch import nn
@@ -14,9 +15,6 @@ from noise2inverse.datasets import (
 )
 
 import tifffile
-import matplotlib.pyplot as plt
-import numpy as np
-import warnings
 
 from tqdm import tqdm
 from noise2inverse import fig, tiffs, noise
@@ -51,7 +49,7 @@ def main(
 
     # Scale pixel intensities during training such that its values roughly occupy the range [0,1].
     # This improves convergence.
-    #data_scaling = 200
+    #data_scaling = 256
 
     datasets = [TiffDataset(join(main_sub_recs_data_path, f"{j}", "*.tif")) for j in range(num_splits)]
     train_ds = Noise2InverseDataset(*datasets, strategy=strategy)
@@ -69,6 +67,15 @@ def main(
 
     # Dataloader and modelwork:
     dl = DataLoader(train_ds, batch_size, shuffle=True, )
+
+    # Put modelwork in evaluation mode: this should be done when the modelwork uses batch norm for instance.
+    for i, batch in tqdm(enumerate(dl)):
+        inp, _ = batch
+        inp = inp.to(device)  # * data_scaling
+        print("inp.min-max:", inp.min(), "\t", inp.max())
+        if i > 5:
+            break
+
     # Option a) Use MSD modelwork
     if model_name == "msd":
         from msd_pytorch import MSDRegressionModel
@@ -104,9 +111,9 @@ def main(
 
 
 
-    if not retrain_model:
+    if retrain_model:
         if exists(main_model_chkpt_path):
-            os.rmdir(main_model_chkpt_path)
+            rmtree(main_model_chkpt_path)
             os.makedirs(main_model_chkpt_path)
         start_epoch = 0
     else:
@@ -188,8 +195,11 @@ def main(
 
     ds = Noise2InverseDataset(*datasets, strategy=strategy)
 
+    print(ds.max(), ds.min())
     # Dataloader and modelwork:
     dl = DataLoader(ds, batch_size, shuffle=False, )
+
+
 
     # Load weights
     # state = torch.load(weights_path)
@@ -205,6 +215,7 @@ def main(
             out = model(inp)
             # Take mean over batch dimension (splits):
             out = out.mean(dim=0) #/ data_scaling
+
             # Obtain 2D numpy array
             out_np = out.detach().cpu().numpy().squeeze()
             out_path = join(denoised_recs_dir_path, f"{output_denoised_recs_prefix}_{i:05d}.tif")
@@ -264,8 +275,9 @@ if __name__ == '__main__':
     parser.add_argument('-rec_lib', '--reconstruction_library', default="noise2inverse", type=str, required=False)
     parser.add_argument('-rec_method', '--reconstruction_method', default="fbp", type=str, required=False)
     parser.add_argument('-modes', '--modes_correction', default="circ_mask", type=str, required=False)
-    parser.add_argument('-hist', '--hist_percent', default=100, type=int, required=False)
+    parser.add_argument('-splits', '--num_splits', default=4, type=int, required=False)
     parser.add_argument('-norm', '--normalize_rec', default=0, type=int, choices=[0, 1], required=False)
+    parser.add_argument('-hist', '--hist_percent', default=100, type=int, required=False)
     # -----------------------------------------------------------------------------------------
     # Наборы данных и сохранение результата
     parser.add_argument('-sample_dir', '--sample_dir_path', default=join(".", "phantom"), type=str, required=False)
@@ -340,8 +352,15 @@ if __name__ == '__main__':
     modes_correction_list = np.array(modes_correction_list)
     modes_correction_list = modes_correction_list[modes_correction_list != ""]
 
-    data_dir_pattern = f"lib={args.reconstruction_library}_method={args.reconstruction_method}" + \
-                       f"_norm={args.normalize_rec}_modes={'&'.join(modes_correction_list)}_hist={args.hist_percent}%"
+    data_dir_pattern = join(
+        f"split{args.num_splits}",
+        f"lib={args.reconstruction_library}" + \
+        f"_method={args.reconstruction_method}" + \
+        f"_norm={args.normalize_rec}" + \
+        f"_modes={'&'.join(modes_correction_list)}" + \
+        f"_hist={args.hist_percent}%"
+    )
+
     reconstructions_dir_path = join(main_data_path, data_dir_pattern, "reconstructions")
     assert exists(reconstructions_dir_path), \
         f"Директория с данными образца {main_data_path} не содержит директории с .tif реконструкциями"
@@ -373,6 +392,8 @@ if __name__ == '__main__':
     correct_splits_names = list(range(0, max(list(map(int, not_empty_sub_reconstructions_dirs))) + 1))
     assert len(set(not_empty_sub_reconstructions_dirs).intersection(set(correct_splits_names))) == len(correct_splits_names), \
         f"Наименования директорий суб-реконструкций должны представлять собой ряд натуральных чисел"
+    assert len(not_empty_sub_reconstructions_dirs) == args.num_splits, \
+        f"Указано взять {args.num_splits} разбиений, найдено {len(not_empty_sub_reconstructions_dirs) }"
 
     # Ожидаю найти максимум одну чистую и максимум одну зашумленную директорию проекций
     clean_reconstructions_dir = list(
