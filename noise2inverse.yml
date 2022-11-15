@@ -1,0 +1,24 @@
+name: noise2inverse
+channels:
+  - defaults
+  - anaconda 
+  - conda-forge 
+  - pytorch
+  - astra-toolbox/label/dev
+dependencies:
+  - python=3.7
+  - pip
+  - pytorch==1.7.1
+  - torchvision==0.8.2
+  - torchaudio==0.7.2
+  - cudatoolkit=10.2
+  - cudatoolkit-dev 
+  - tomopy
+  - astra-toolbox
+  - matplotlib
+  - foam_ct_phantom
+  - h5py
+  - pandas
+  - pip:
+    - git+https://github.com/ahendriksen/tomosipo.git@v0.3.1  
+prefix: /home/t_kolesnik/numpy/envs/noise2inverse
