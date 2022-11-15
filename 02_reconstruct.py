@@ -6,42 +6,15 @@ import argparse
 import tifffile
 import tomosipo as ts
 import tomopy
-import matplotlib.pyplot as plt
-import numpy as np
 import random
-from noise2inverse import tiffs, tomo, fig
-import time
-from math import log2
 import warnings
 
 warnings.filterwarnings("ignore", category=FutureWarning)
-from tomopy import ufo_fbp
-from noise2inverse import tiffs, tomo, fig
-from noise2inverse.tomo import filter_proj_data
 from copy import deepcopy
-import tomosipo.torch_support
-import torch
-# Load data
-import dxchange
-from tqdm import tqdm
-from IPython.display import Audio, display, HTML
-
-display(HTML("<style>.container { width:97.5% !important; }</style>"))
-from ipywidgets import interact
-from pathlib import Path
-import re
-from noise2inverse import fig, tiffs, noise
-# Load data
-import h5py
-import cupy as cp
-from os.path import join
-import ts_algorithms
-import tomopy.util.dtype as dtype
 from noise2inverse import tiffs, tomo, fig
 # Load data
 from noise2inverse import fig, tiffs, noise
 from my_utils.log_histogram import *
-import localtomo
 from localtomo.tomography import AstraToolbox
 
 class FBPSinosPreprocessor:
@@ -55,7 +28,7 @@ class FBPSinosPreprocessor:
     def fit(self, height, num_angles, width, center):
         # Determine geometry
         self.height, self.num_angles, self.width = height, num_angles, width
-        if center == -1:
+        if center < 0:
             self.center = self.width // 2
         else:
             self.center = center
@@ -125,6 +98,7 @@ class ReconstructByAnglesSlice:
             "astra_FBP", "astra_SIRT",
             "ospml_hybrid", "ospml_quad",
             "pml_hybrid", "pml_quad", "sirt", "tv", "grad", "tikh",]
+        # ToDo ts_algorithm
     }
 
     def __init__(
@@ -193,7 +167,7 @@ class ReconstructByAnglesSlice:
 
             self.A = ts.operator(self.vg, self.pg)
         else:
-            if center == -1:
+            if center < -1:
                 self.center = self.width / 2  # (можно еще найти через tomopy)
             else:
                 self.center = center
@@ -206,6 +180,7 @@ class ReconstructByAnglesSlice:
                     dwidth=self.width,
                     angles=self.angles, rot_center=self.center
                 )
+
             elif self.library == "tomopy":
                 # ToDo - подумать, какие параметры можно инициализировать для tomopy?
                 print("Tomopy support")
@@ -213,6 +188,12 @@ class ReconstructByAnglesSlice:
 
                 assert False, "# ToDo"
 
+    def __get_astratb_obj_split(self, angles):
+        return AstraToolbox(
+            slice_shape=(self.width, self.width),
+            dwidth=self.width,
+            angles=angles, rot_center=self.center
+        )
 
     def postprocess(self, recs):
         for name_transform in self.postprocessing_list:
@@ -255,11 +236,13 @@ class ReconstructByAnglesSlice:
 
         for j in range(num_splits):
             sinos_split = new_sinos[:, j::num_splits, :]
+            angles_split = self.angles[j::num_splits]
             print("\nsinos_split:", sinos_split.shape, )
 
             if self.library == "localtomo":
                 if self.method == "fbp":
-                    recs_split = self.astratb_obj.fbp(sinos_split)
+                    astratb_obj_split = self.__get_astratb_obj_split(angles_split)
+                    recs_split = astratb_obj_split.fbp(sinos_split)
                 else:
                     assert False  # ToDo
             elif self.library == "noise2inverse":
@@ -280,7 +263,9 @@ class ReconstructByAnglesSlice:
                         sinogram_order=True
                     )
                 '''
-
+            elif self.library == "tomopy":
+                print("sinos_split.shape:", sinos_split.shape, "\tlen(angles_split)", len(angles_split))
+                recs_split = tomopy_recon(sinos_split, angles_split, self.center, algorithm=self.method, sinogram_order=False)
             else:
                 assert False # ToDo
 
@@ -331,8 +316,16 @@ def main(
         f'output_recs_prefix={output_recs_prefix}',
         f'log_rec_idx={log_rec_idx}\n', sep='\n\t\t'
     )
-    dir_pattern_name = f"lib={rec_library}_method={rec_method}" + \
-         f"_norm={normalize_rec}_modes={'&'.join(modes_correction_list)}_hist={hist_percent}%"
+
+    dir_pattern_name = join(
+        f"split{num_splits}",
+        f"lib={rec_library}" + \
+        f"_method={rec_method}" + \
+        f"_norm={normalize_rec}" + \
+        f"_modes={'&'.join(modes_correction_list)}" + \
+        f"_hist={hist_percent}%"
+    )
+    print("dir_pattern_name: ", dir_pattern_name)
     output_logs_dir = join(main_logs_path, dir_pattern_name, "reconstructions")
     os.makedirs(output_logs_dir, exist_ok=True)
     output_data_dir = join(main_data_path, dir_pattern_name, "reconstructions")
@@ -483,7 +476,7 @@ if __name__ == '__main__':
     parser.add_argument('-center', '--center', default=-1, type=int, required=False)
     # Если отрицательный - середина
     parser.add_argument('-width', '--rec_width', default=-1, type=int, required=False)
-    # Если отрицательный - изначальный
+    # rec_width позволяет изменить размер получаемой реконтрукции (Если задано отрицательное число - изначальный)
     parser.add_argument('-modes', '--modes_correction', default="circ_mask", type=str, required=False)
     parser.add_argument('-splits', '--num_splits', default=4, type=int, required=False)
     parser.add_argument('-norm', '--normalize_rec', default=0, type=int, choices=[0, 1], required=False)
