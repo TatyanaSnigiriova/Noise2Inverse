@@ -250,7 +250,7 @@ if __name__ == '__main__':
     # Если указано наименование файла - первый элемент пути ''
     if not (os.path.isabs(projs_path) or projs_path.startswith('.')):
         # Пытаемся считать из директории, из которой был запущен код
-        # getcwd() выдаст путь, из которого производится запуск скрипта
+        # getcwd() выдаст путь, из которого производится запуск скрипта (pwd)
         if exists(working_dir):
             if getcwd() == working_dir:
                 assert exists(join(working_dir, projs_path)),\
