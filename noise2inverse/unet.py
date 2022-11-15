@@ -77,10 +77,21 @@ class outconv(nn.Module):
         x = self.conv(x)
         return x
 
+class Identical(nn.Module):
+    def forward(self, x):
+        return x
 
 class UNet(nn.Module):
-    def __init__(self, n_channels, n_classes, n_features=64):
+    def __init__(self, n_channels, n_classes, n_features=64, normalize_input=True):
         super(UNet, self).__init__()
+        preprocess_layers_list = []
+        if normalize_input:
+            preprocess_layers_list.append(nn.BatchNorm2d(n_channels))
+        if preprocess_layers_list:
+            self.preprocess = nn.Sequential(* preprocess_layers_list)
+        else:
+            self.preprocess = None
+            # or self.preprocess = nn.Sequential(Identical())
         self.inc = inconv(n_channels, n_features)
         self.down1 = down(n_features, 2 * n_features)
         self.down2 = down(2 * n_features, 4 * n_features)
@@ -98,6 +109,8 @@ class UNet(nn.Module):
         padding = (Wp // 2, Wp - Wp // 2, Hp // 2, Hp - Hp // 2)
         reflect = nn.ReflectionPad2d(padding)
         x = reflect(x)
+        if self.preprocess:
+            x = self.preprocess(x)
 
         x1 = self.inc(x)
         x2 = self.down1(x1)
