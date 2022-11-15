@@ -1,0 +1,32 @@
+Warning: dxfile module not found
+Warning: netCDF4 module not found
+spefile module not found
+netCDF4 module not found
+EdfFile module not found
+astropy module not found
+olefile module not found
+0it [00:00, ?it/s]151it [00:00, 1509.32it/s]382it [00:00, 1975.50it/s]623it [00:00, 2169.79it/s]720it [00:00, 2110.92it/s]
+/home/t_kolesnik/noise2inverse_temp/noise2inverse/tomo.py:68: UserWarning: The function torch.rfft is deprecated and will be removed in a future PyTorch release. Use the new torch.fft module functions, instead, by importing torch.fft and calling torch.fft.fft or torch.fft.rfft. (Triggered internally at  /opt/conda/conda-bld/pytorch_1607370128159/work/aten/src/ATen/native/SpectralOps.cpp:590.)
+  onesided=True  # ?
+/home/t_kolesnik/noise2inverse_temp/noise2inverse/tomo.py:110: UserWarning: The function torch.irfft is deprecated and will be removed in a future PyTorch release. Use the new torch.fft module functions, instead, by importing torch.fft and calling torch.fft.ifft or torch.fft.irfft. (Triggered internally at  /opt/conda/conda-bld/pytorch_1607370128159/work/aten/src/ATen/native/SpectralOps.cpp:602.)
+  onesided=True
+0it [00:00, ?it/s]224it [00:04, 47.73it/s]
+/home/t_kolesnik/noise2inverse_temp/my_utils/log_histogram.py:53: MatplotlibDeprecationWarning: Passing the minor parameter of set_yticks() positionally is deprecated since Matplotlib 3.2; the parameter will become keyword-only two minor releases later.
+  axs.set_yticks(range(len(yticks)), yticks)
+0it [00:00, ?it/s]224it [00:05, 42.46it/s]
+0it [00:00, ?it/s]224it [00:05, 41.33it/s]
+0it [00:00, ?it/s]224it [00:03, 62.28it/s]
+0it [00:00, ?it/s]224it [00:03, 62.44it/s]
+0it [00:00, ?it/s]224it [00:03, 58.89it/s]
+0it [00:00, ?it/s]224it [00:04, 47.21it/s]
+0it [00:00, ?it/s]224it [00:04, 47.13it/s]
+0it [00:00, ?it/s]224it [00:03, 67.51it/s]
+0it [00:00, ?it/s]224it [00:04, 55.31it/s]
+0it [00:00, ?it/s]224it [00:04, 48.85it/s]
+0it [00:00, ?it/s]224it [00:03, 67.16it/s]
+0it [00:00, ?it/s]224it [00:04, 55.31it/s]
+0it [00:00, ?it/s]224it [00:04, 47.08it/s]
+0it [00:00, ?it/s]224it [00:03, 67.41it/s]
+0it [00:00, ?it/s]224it [00:03, 67.65it/s]
+0it [00:00, ?it/s]224it [00:04, 47.05it/s]
+0it [00:00, ?it/s]224it [00:04, 48.11it/s]

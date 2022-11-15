@@ -1,0 +1,13 @@
+0it [00:00, ?it/s]29it [00:00, 288.62it/s]73it [00:00, 349.28it/s]117it [00:00, 384.96it/s]178it [00:00, 469.71it/s]226it [00:00, 429.68it/s]270it [00:00, 430.94it/s]314it [00:00, 401.13it/s]359it [00:00, 414.90it/s]402it [00:01, 376.42it/s]486it [00:01, 502.14it/s]546it [00:01, 511.46it/s]606it [00:01, 519.69it/s]671it [00:01, 535.69it/s]745it [00:01, 584.48it/s]805it [00:01, 485.23it/s]868it [00:01, 520.89it/s]924it [00:01, 485.26it/s]984it [00:02, 514.12it/s]1024it [00:02, 481.60it/s]
+0it [00:00, ?it/s]29it [00:00, 289.44it/s]92it [00:00, 488.19it/s]141it [00:00, 430.58it/s]194it [00:00, 455.80it/s]241it [00:00, 375.02it/s]287it [00:00, 398.81it/s]349it [00:00, 460.23it/s]410it [00:00, 502.73it/s]468it [00:01, 508.33it/s]530it [00:01, 519.33it/s]601it [00:01, 560.43it/s]658it [00:01, 545.72it/s]726it [00:01, 576.25it/s]785it [00:01, 566.48it/s]853it [00:01, 595.25it/s]913it [00:01, 555.06it/s]970it [00:01, 541.88it/s]1024it [00:01, 519.03it/s]
+/home/t_kolesnik/noise2inverse_temp/noise2inverse/tomo.py:68: UserWarning: The function torch.rfft is deprecated and will be removed in a future PyTorch release. Use the new torch.fft module functions, instead, by importing torch.fft and calling torch.fft.fft or torch.fft.rfft. (Triggered internally at  /opt/conda/conda-bld/pytorch_1607370128159/work/aten/src/ATen/native/SpectralOps.cpp:590.)
+  onesided=True  # ?
+/home/t_kolesnik/noise2inverse_temp/noise2inverse/tomo.py:110: UserWarning: The function torch.irfft is deprecated and will be removed in a future PyTorch release. Use the new torch.fft module functions, instead, by importing torch.fft and calling torch.fft.ifft or torch.fft.irfft. (Triggered internally at  /opt/conda/conda-bld/pytorch_1607370128159/work/aten/src/ATen/native/SpectralOps.cpp:602.)
+  onesided=True
+0it [00:00, ?it/s]512it [00:05, 92.15it/s]
+0it [00:00, ?it/s]512it [00:05, 91.58it/s]
+0it [00:00, ?it/s]512it [00:06, 76.71it/s]
+0it [00:00, ?it/s]512it [00:05, 91.67it/s]
+0it [00:00, ?it/s]512it [00:05, 92.13it/s]
+0it [00:00, ?it/s]512it [00:05, 91.80it/s]
+0it [00:00, ?it/s]512it [00:05, 92.24it/s]

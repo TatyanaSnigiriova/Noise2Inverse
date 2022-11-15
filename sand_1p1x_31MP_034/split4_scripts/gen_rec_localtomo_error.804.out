@@ -1,0 +1,37 @@
+Warning: dxfile module not found
+Warning: netCDF4 module not found
+spefile module not found
+netCDF4 module not found
+EdfFile module not found
+astropy module not found
+olefile module not found
+0it [00:00, ?it/s]175it [00:00, 1747.87it/s]381it [00:00, 1925.87it/s]585it [00:00, 1974.10it/s]720it [00:00, 1954.56it/s]
+Traceback (most recent call last):
+  File "02_reconstruct.py", line 534, in <module>
+    args.output_proj_prefix, args.log_proj_idx,
+  File "02_reconstruct.py", line 317, in main
+    postprocessing_args
+  File "02_reconstruct.py", line 171, in __init__
+    angles=self.angles, rot_center=self.center
+  File "/home/t_kolesnik/noise2inverse_temp/localtomo/tomography.py", line 58, in __init__
+    n_x, n_y = slice_shape
+ValueError: too many values to unpack (expected 2)
+Warning: dxfile module not found
+Warning: netCDF4 module not found
+spefile module not found
+netCDF4 module not found
+EdfFile module not found
+astropy module not found
+olefile module not found
+0it [00:00, ?it/s]63it [00:00, 627.99it/s]161it [00:00, 834.67it/s]303it [00:00, 1101.40it/s]446it [00:00, 1229.04it/s]580it [00:00, 1268.73it/s]713it [00:00, 1287.91it/s]856it [00:00, 1332.12it/s]999it [00:00, 1361.42it/s]1024it [00:00, 1249.36it/s]
+0it [00:00, ?it/s]11it [00:00, 109.51it/s]145it [00:00, 828.78it/s]280it [00:00, 1065.22it/s]413it [00:00, 1168.84it/s]548it [00:00, 1231.40it/s]682it [00:00, 1267.12it/s]815it [00:00, 1285.79it/s]947it [00:00, 1294.95it/s]1024it [00:00, 1189.40it/s]
+Traceback (most recent call last):
+  File "02_reconstruct.py", line 534, in <module>
+    args.output_proj_prefix, args.log_proj_idx,
+  File "02_reconstruct.py", line 317, in main
+    postprocessing_args
+  File "02_reconstruct.py", line 171, in __init__
+    angles=self.angles, rot_center=self.center
+  File "/home/t_kolesnik/noise2inverse_temp/localtomo/tomography.py", line 58, in __init__
+    n_x, n_y = slice_shape
+ValueError: too many values to unpack (expected 2)

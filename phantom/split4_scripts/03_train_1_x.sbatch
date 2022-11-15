@@ -1,0 +1,20 @@
+#!/bin/bash -l
+#export PATH=/opt/slurm/bin:$PATH
+#SBATCH -J train_x_1 # Job name
+#SBATCH -p compclass # Queue name (queues - gpuserv, compclass)
+#SBATCH -o /home/t_kolesnik/noise2inverse_temp/phantom/split4_scripts/train_1_x.%j.out #(%j expands to %jobId)
+#SBATCH -e /home/t_kolesnik/noise2inverse_temp/phantom/split4_scripts/train_1_x_error.%j.out #(%j expands to %jobId)
+# #SBATCH -N 1 # Total number of nodes requested
+# source ~/anaconda3/etc/profile.d/conda.sh
+conda activate test_noise_env;
+
+python 03_train.py \
+    -cpu=0 -device=0 -global_rs=42 \
+    --reconstruction_library='noise2inverse' --reconstruction_method='fbp' \
+    -sample_dir='phantom' \
+    -data_dir='data' -models_dir="models" -logs_dir='logs' \
+    -prefix="output" -log_idx=50 \
+    -modes="circ_mask" -splits=4 \
+    -norm=0 \
+    -strategy="1:X" -model="unet" -epochs=200 \
+    -batch=4 --retrain_model=0;  ## >>instance3.out 2>&1 & # "1:X"

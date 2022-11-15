@@ -1,0 +1,205 @@
+------------------------------------------------------------------------------------------------
+sample_dir_path:	 phantom
+sample_dir_path:	 /home/t_kolesnik/noise2inverse_temp/phantom
+projections_dirs: ['projections_noisy', 'projections_clean']
+clean_projections_dir: ['projections_clean']
+noisy_projections_dir: ['projections_noisy']
+Training on GPU...
+
+		device = gpu
+		global_rs=42
+		rec_library=noise2inverse
+		rec_method=fbp
+		main_data_path=/home/t_kolesnik/noise2inverse_temp/phantom/data
+		clean_projections_dir=projections_clean
+		noisy_projections_dir=projections_noisy
+		main_logs_path=/home/t_kolesnik/noise2inverse_temp/phantom/logs
+		center=-1
+		rec_width=512
+		modes_correction_list=['circ_mask']
+		splits=4
+		normalize_rec=0
+		hist_percent=100
+		circ_mask_ratio=0.9
+		output_recs_prefix=output
+		log_rec_idx=50
+
+dir_pattern_name:  split4/lib=noise2inverse_method=fbp_norm=0_modes=circ_mask_hist=100%
+sino_clean: (512, 1024, 768) <class 'numpy.ndarray'> float32
+sino_noisy: (512, 1024, 768) <class 'numpy.ndarray'> float32
+postprocessing_args: {'circ_mask': [('ratio', 0.9), ('axis', 0)]}
+postprocessing_args: {'circ_mask': [('ratio', 0.9), ('axis', 0)]}
+postprocessing_list ['circ_mask']
+
+angles: 1024 [0.00000000e+00 3.06796158e-03 6.13592315e-03 ... 3.13238877e+00
+ 3.13545673e+00 3.13852469e+00]
+	vol_shape: (512, 512, 512) 	det_shape (512, 768)
+
+new_sinos: (512, 1024, 768)
+
+sino: torch.Size([512, 1024, 768])
+num_padding_left: 384 	num_padding: 768
+
+M:	 1536
+
+tmp_sino:	 torch.Size([512, 1024, 1536])
+
+fourier_sino:	 torch.Size([512, 1024, 769, 2])
+
+real_filter:	 (1536,)
+
+fourier_filter:	 torch.Size([769, 2])
+
+fourier_sino:	 torch.Size([512, 1024, 769, 2])
+torch.Size([512, 1024, 769]) 	*	 torch.Size([769])
+
+new_fourier_sino:	 torch.Size([512, 1024, 769, 2])
+
+tmp_filtered:	 torch.Size([512, 1024, 1537])
+
+tmp_filtered:	 torch.Size([512, 1024, 1537])
+
+filtered:	 torch.Size([512, 1024, 768])
+
+recs_clean: (512, 512, 512)
+
+new_sinos: (512, 1024, 768)
+
+sino: torch.Size([512, 1024, 768])
+num_padding_left: 384 	num_padding: 768
+
+M:	 1536
+
+tmp_sino:	 torch.Size([512, 1024, 1536])
+
+fourier_sino:	 torch.Size([512, 1024, 769, 2])
+
+real_filter:	 (1536,)
+
+fourier_filter:	 torch.Size([769, 2])
+
+fourier_sino:	 torch.Size([512, 1024, 769, 2])
+torch.Size([512, 1024, 769]) 	*	 torch.Size([769])
+
+new_fourier_sino:	 torch.Size([512, 1024, 769, 2])
+
+tmp_filtered:	 torch.Size([512, 1024, 1537])
+
+tmp_filtered:	 torch.Size([512, 1024, 1537])
+
+filtered:	 torch.Size([512, 1024, 768])
+
+recs_noisy: (512, 512, 512)
+
+sinos_split: (512, 256, 768)
+
+sino: torch.Size([512, 256, 768])
+num_padding_left: 384 	num_padding: 768
+
+M:	 1536
+
+tmp_sino:	 torch.Size([512, 256, 1536])
+
+fourier_sino:	 torch.Size([512, 256, 769, 2])
+
+real_filter:	 (1536,)
+
+fourier_filter:	 torch.Size([769, 2])
+
+fourier_sino:	 torch.Size([512, 256, 769, 2])
+torch.Size([512, 256, 769]) 	*	 torch.Size([769])
+
+new_fourier_sino:	 torch.Size([512, 256, 769, 2])
+
+tmp_filtered:	 torch.Size([512, 256, 1537])
+
+tmp_filtered:	 torch.Size([512, 256, 1537])
+
+filtered:	 torch.Size([512, 256, 768])
+
+recs_noisy_split: (512, 512, 512)
+
+sinos_split: (512, 256, 768)
+
+sino: torch.Size([512, 256, 768])
+num_padding_left: 384 	num_padding: 768
+
+M:	 1536
+
+tmp_sino:	 torch.Size([512, 256, 1536])
+
+fourier_sino:	 torch.Size([512, 256, 769, 2])
+
+real_filter:	 (1536,)
+
+fourier_filter:	 torch.Size([769, 2])
+
+fourier_sino:	 torch.Size([512, 256, 769, 2])
+torch.Size([512, 256, 769]) 	*	 torch.Size([769])
+
+new_fourier_sino:	 torch.Size([512, 256, 769, 2])
+
+tmp_filtered:	 torch.Size([512, 256, 1537])
+
+tmp_filtered:	 torch.Size([512, 256, 1537])
+
+filtered:	 torch.Size([512, 256, 768])
+
+recs_noisy_split: (512, 512, 512)
+
+sinos_split: (512, 256, 768)
+
+sino: torch.Size([512, 256, 768])
+num_padding_left: 384 	num_padding: 768
+
+M:	 1536
+
+tmp_sino:	 torch.Size([512, 256, 1536])
+
+fourier_sino:	 torch.Size([512, 256, 769, 2])
+
+real_filter:	 (1536,)
+
+fourier_filter:	 torch.Size([769, 2])
+
+fourier_sino:	 torch.Size([512, 256, 769, 2])
+torch.Size([512, 256, 769]) 	*	 torch.Size([769])
+
+new_fourier_sino:	 torch.Size([512, 256, 769, 2])
+
+tmp_filtered:	 torch.Size([512, 256, 1537])
+
+tmp_filtered:	 torch.Size([512, 256, 1537])
+
+filtered:	 torch.Size([512, 256, 768])
+
+recs_noisy_split: (512, 512, 512)
+
+sinos_split: (512, 256, 768)
+
+sino: torch.Size([512, 256, 768])
+num_padding_left: 384 	num_padding: 768
+
+M:	 1536
+
+tmp_sino:	 torch.Size([512, 256, 1536])
+
+fourier_sino:	 torch.Size([512, 256, 769, 2])
+
+real_filter:	 (1536,)
+
+fourier_filter:	 torch.Size([769, 2])
+
+fourier_sino:	 torch.Size([512, 256, 769, 2])
+torch.Size([512, 256, 769]) 	*	 torch.Size([769])
+
+new_fourier_sino:	 torch.Size([512, 256, 769, 2])
+
+tmp_filtered:	 torch.Size([512, 256, 1537])
+
+tmp_filtered:	 torch.Size([512, 256, 1537])
+
+filtered:	 torch.Size([512, 256, 768])
+
+recs_noisy_split: (512, 512, 512)
+clean_noisy_sub0_1_2_3_norm=0.png

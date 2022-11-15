@@ -1,0 +1,61 @@
+------------------------------------------------------------------------------------------------
+sample_dir_path:	 phantom
+sample_dir_path:	 /home/t_kolesnik/noise2inverse_temp/phantom
+projections_dirs: ['projections_noisy', 'projections_clean']
+clean_projections_dir: ['projections_clean']
+noisy_projections_dir: ['projections_noisy']
+Training on GPU...
+
+		device = gpu
+		global_rs=42
+		rec_library=tomopy
+		rec_method=fbp
+		main_data_path=/home/t_kolesnik/noise2inverse_temp/phantom/data
+		clean_projections_dir=projections_clean
+		noisy_projections_dir=projections_noisy
+		main_logs_path=/home/t_kolesnik/noise2inverse_temp/phantom/logs
+		center=-1
+		rec_width=512
+		modes_correction_list=['circ_mask']
+		splits=4
+		normalize_rec=0
+		hist_percent=100
+		circ_mask_ratio=0.9
+		output_recs_prefix=output
+		log_rec_idx=50
+
+dir_pattern_name:  split4/lib=tomopy_method=fbp_norm=0_modes=circ_mask_hist=100%
+sino_clean: (512, 1024, 768) <class 'numpy.ndarray'> float32
+sino_noisy: (512, 1024, 768) <class 'numpy.ndarray'> float32
+postprocessing_args: {'circ_mask': [('ratio', 0.9), ('axis', 0)]}
+postprocessing_args: {'circ_mask': [('ratio', 0.9), ('axis', 0)]}
+postprocessing_list ['circ_mask']
+
+angles: 1024 [0.00000000e+00 3.06796158e-03 6.13592315e-03 ... 3.13238877e+00
+ 3.13545673e+00 3.13852469e+00]
+Tomopy support
+
+recs_clean: (1024, 768, 768)
+
+recs_noisy: (1024, 768, 768)
+
+sinos_split: (512, 256, 768)
+sinos_split.shape: (512, 256, 768) 	len(angles_split) 256
+
+recs_noisy_split: (256, 768, 768)
+
+sinos_split: (512, 256, 768)
+sinos_split.shape: (512, 256, 768) 	len(angles_split) 256
+
+recs_noisy_split: (256, 768, 768)
+
+sinos_split: (512, 256, 768)
+sinos_split.shape: (512, 256, 768) 	len(angles_split) 256
+
+recs_noisy_split: (256, 768, 768)
+
+sinos_split: (512, 256, 768)
+sinos_split.shape: (512, 256, 768) 	len(angles_split) 256
+
+recs_noisy_split: (256, 768, 768)
+clean_noisy_sub0_1_2_3_norm=0.png

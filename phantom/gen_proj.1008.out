@@ -1,0 +1,25 @@
+------------------------------------------------------------------------------------------------
+working_dir:	 phantom
+working_dir:	 /home/t_kolesnik/noise2inverse_temp/phantom
+projs_path:	 phantom.h5
+getcwd:	 /home/t_kolesnik/noise2inverse_temp
+('', 'phantom.h5')
+/home/t_kolesnik/noise2inverse_temp/phantom.h5
+phantom
+
+		device = gpu
+		global_random_seed=42
+		main_data_path=/home/t_kolesnik/noise2inverse_temp/phantom/data
+		main_logs_path=/home/t_kolesnik/noise2inverse_temp/phantom/logs
+		output_projs_prefix=output
+		log_proj_idx=50
+
+
+phantom
+/home/t_kolesnik/noise2inverse_temp/phantom/data/projections_clean
+/home/t_kolesnik/noise2inverse_temp/phantom/data/projections_clean
+/home/t_kolesnik/noise2inverse_temp/phantom/data/projections_clean
+Generating projections
+Saving tiff stack of projections
+Absorption: 50%
+Shape:      (1024, 512, 768)

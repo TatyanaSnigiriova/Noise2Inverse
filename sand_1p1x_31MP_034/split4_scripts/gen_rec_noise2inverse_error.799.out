@@ -1,0 +1,40 @@
+Warning: dxfile module not found
+Warning: netCDF4 module not found
+spefile module not found
+netCDF4 module not found
+EdfFile module not found
+astropy module not found
+olefile module not found
+0it [00:00, ?it/s]155it [00:00, 1543.34it/s]348it [00:00, 1768.36it/s]542it [00:00, 1842.56it/s]720it [00:00, 1826.07it/s]
+/home/t_kolesnik/noise2inverse_temp/noise2inverse/tomo.py:68: UserWarning: The function torch.rfft is deprecated and will be removed in a future PyTorch release. Use the new torch.fft module functions, instead, by importing torch.fft and calling torch.fft.fft or torch.fft.rfft. (Triggered internally at  /opt/conda/conda-bld/pytorch_1607370128159/work/aten/src/ATen/native/SpectralOps.cpp:590.)
+  onesided=True  # ?
+/home/t_kolesnik/noise2inverse_temp/noise2inverse/tomo.py:110: UserWarning: The function torch.irfft is deprecated and will be removed in a future PyTorch release. Use the new torch.fft module functions, instead, by importing torch.fft and calling torch.fft.ifft or torch.fft.irfft. (Triggered internally at  /opt/conda/conda-bld/pytorch_1607370128159/work/aten/src/ATen/native/SpectralOps.cpp:602.)
+  onesided=True
+0it [00:00, ?it/s]224it [00:03, 71.10it/s]
+/home/t_kolesnik/noise2inverse_temp/my_utils/log_histogram.py:53: MatplotlibDeprecationWarning: Passing the minor parameter of set_yticks() positionally is deprecated since Matplotlib 3.2; the parameter will become keyword-only two minor releases later.
+  axs.set_yticks(range(len(yticks)), yticks)
+0it [00:00, ?it/s]224it [00:03, 63.29it/s]
+0it [00:00, ?it/s]224it [00:03, 66.39it/s]
+0it [00:00, ?it/s]224it [00:03, 66.29it/s]
+0it [00:00, ?it/s]224it [00:03, 66.36it/s]
+0it [00:00, ?it/s]224it [00:03, 66.22it/s]
+Warning: dxfile module not found
+Warning: netCDF4 module not found
+spefile module not found
+netCDF4 module not found
+EdfFile module not found
+astropy module not found
+olefile module not found
+0it [00:00, ?it/s]56it [00:00, 556.21it/s]177it [00:00, 935.61it/s]271it [00:00, 897.44it/s]389it [00:00, 1004.35it/s]507it [00:00, 1063.52it/s]624it [00:00, 1096.11it/s]739it [00:00, 1113.48it/s]855it [00:00, 1125.31it/s]971it [00:00, 1134.96it/s]1024it [00:00, 1066.78it/s]
+0it [00:00, ?it/s]18it [00:00, 178.77it/s]133it [00:00, 747.45it/s]248it [00:00, 929.32it/s]363it [00:00, 1013.20it/s]482it [00:00, 1076.19it/s]617it [00:00, 1168.91it/s]755it [00:00, 1235.17it/s]884it [00:00, 1251.85it/s]1015it [00:00, 1269.55it/s]1024it [00:00, 1125.50it/s]
+/home/t_kolesnik/noise2inverse_temp/noise2inverse/tomo.py:68: UserWarning: The function torch.rfft is deprecated and will be removed in a future PyTorch release. Use the new torch.fft module functions, instead, by importing torch.fft and calling torch.fft.fft or torch.fft.rfft. (Triggered internally at  /opt/conda/conda-bld/pytorch_1607370128159/work/aten/src/ATen/native/SpectralOps.cpp:590.)
+  onesided=True  # ?
+/home/t_kolesnik/noise2inverse_temp/noise2inverse/tomo.py:110: UserWarning: The function torch.irfft is deprecated and will be removed in a future PyTorch release. Use the new torch.fft module functions, instead, by importing torch.fft and calling torch.fft.ifft or torch.fft.irfft. (Triggered internally at  /opt/conda/conda-bld/pytorch_1607370128159/work/aten/src/ATen/native/SpectralOps.cpp:602.)
+  onesided=True
+0it [00:00, ?it/s]512it [00:05, 91.59it/s]
+0it [00:00, ?it/s]512it [00:05, 92.81it/s]
+0it [00:00, ?it/s]512it [00:06, 78.71it/s]
+0it [00:00, ?it/s]512it [00:05, 92.93it/s]
+0it [00:00, ?it/s]512it [00:05, 92.44it/s]
+0it [00:00, ?it/s]512it [00:05, 92.11it/s]
+0it [00:00, ?it/s]512it [00:05, 92.51it/s]
